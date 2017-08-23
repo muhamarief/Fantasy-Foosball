@@ -1,0 +1,91 @@
+<%= render template: "component/_header"%>
+
+<div class='col-md-8 col-lg-8 col-sm-8 col-md-offset-2 col-sm-offset-2 col-lg-offset-2'>
+    <div class='row'>
+        <div class='col-md-8 col-sm-8 col-lg-8 col-xs-10'>
+            <h2 class='headers-text'> MATCHES <small> All List </small> </h2>
+        <!-- div .col-md-8 col-sm-8 col-lg-8 col-xs-10 -->
+        </div>
+        <div class='btn-admin col-md-4 col-sm-4 col-lg-4 col-xs-2'>
+            <button type="button" class="btn btn-success btn-md pull-right" align='center' data-toggle="modal" data-target="#myModal">Add New Match</button>
+
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <%= form_for @match do |f| %>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+
+                            <div class="modal-body row">
+                                <div class='form-group col-md-5'>
+                                    <%= f.label :home %><br/>
+                                    <%= f.collection_select :away_team_id, Team.order(:name),:id,:name, include_blank: true, class: 'form-control' %>
+                                </div>
+
+                                <div class='col-md-2'>
+                                    <h3> VS </h3>
+                                </div>
+
+                                <div class='form-group col-md-5'>
+                                    <%= f.label :away %><br/>
+                                    <%= f.collection_select :home_team_id, Team.order(:name),:id,:name, include_blank: true, class: 'form-control' %>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
+                            </div>
+                        <% end %>
+                    <!-- div .modal-content -->
+                    </div>
+                <!-- div .modal-dialog -->
+                </div>
+            <!-- div .modal-fade -->
+            </div>
+        <!-- div .col-md-4 col-sm-4 col-lg-4 col-xs-2-->
+        </div>
+    </div>
+
+
+
+
+
+    <div class='jumbotron'>
+        <% if @matches.length < 1 %>
+            <p> No Matches Yet</p>
+        <% else %>
+            <% @matches.each do |match| %>
+                <div class='admin-indexes'>
+                    <div class='row'>
+                        <div class='col-md-5'>
+                            <h3> <%= Team.find(match.home_team_id).name %> </h3>
+                        </div>
+
+                        <div class='col-md-2'>
+                            <h4> VS </h4>
+                        </div>
+
+                        <div class='col-md-5'>
+                            <h3> <%= Team.find(match.away_team_id).name %> </h3>
+                        </div>
+                    </div>
+
+                    <div align='center'>
+                        <% if match.winner && match.loser %>
+                            <p> Winner: <%= Team.find(match.winner.id)%> </p>
+                            <p> Loser: <%= Team.find(match.loser.id)%> </p>
+                        <% else%>
+                            <p> UpComing Match </p>
+
+                            <%= link_to "Details", match_path(match) %>
+                        <% end %>
+                    </div>
+                </div>
+            <% end %>
+        <% end %>
+    <!-- div .jumbotron -->
+    </div>
+<!-- div .col-md-8 col-lg-8 col-sm-8 col-md-offset-2 col-sm-offset-2 col-lg-offset-2 -->
+</div>

@@ -1,0 +1,98 @@
+<%= render template: "component/_header"%>
+
+<div class='col-md-8 col-lg-8 col-sm-8 col-md-offset-2 col-sm-offset-2 col-lg-offset-2'>
+    <div class='row'>
+        <div class='col-md-8 col-sm-8 col-lg-8 col-xs-10'>
+            <h2 class='headers-text'> Match <small> Full Details </small> </h2>
+        <!-- div .col-md-8 col-sm-8 col-lg-8 col-xs-10 -->
+        </div>
+        <div class='btn-admin col-md-4 col-sm-4 col-lg-4 col-xs-2'>
+            <button type="button" class="btn btn-success btn-md pull-right" align='center' data-toggle="modal" data-target="#myModal">Update Match</button>
+
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <%= form_for @match do |f| %>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class='form-group col-md-5'>
+                                    <%= f.label :home %><br/>
+                                    <%= f.collection_select :away_team_id, Team.order(:name),:id,:name, include_blank: true, class: 'form-control' %>
+                                </div>
+
+                                <div class='col-md-2'>
+                                    <h3> VS </h3>
+                                </div>
+
+                                <div class='form-group col-md-5'>
+                                    <%= f.label :away %><br/>
+                                    <%= f.collection_select :home_team_id, Team.order(:name),:id,:name, include_blank: true, class: 'form-control' %>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
+                            </div>
+                        <% end %>
+                    <!-- div .modal-content -->
+                    </div>
+                <!-- div .modal-dialog -->
+                </div>
+            <!-- div .modal-fade -->
+            </div>
+        <!-- div .col-md-4 col-sm-4 col-lg-4 col-xs-2-->
+        </div>
+    </div>
+
+
+
+
+
+    <div class='jumbotron'>
+        <% @games.each_with_index do |game, index| %>
+            <div class= 'admin-indexes'>
+                <div class='row'>
+                    <div class='col-md-4'>
+                        <% if game.status %>
+                            <p> <%= game.home_score %> </p>
+                        <% else %>
+                            <p> UpComing </p>
+                        <% end %>
+                    </div>
+
+                    <div class='col-md-2'>
+                        <p> Game <%=index +1 %> </p>
+                    </div>
+
+                    <div class='col-md-4'>
+                        <% if game.status %>
+                            <p> <%= game.away_score %> </p>
+                        <% else %>
+                            <p> UpComing </p>
+                        <% end %>
+                    </div>
+
+                    <div class='col-md-2'>
+                        <%= link_to "Details", game_path(game) %>
+                    </div>
+                </div>
+
+                <% if game.status %>
+                    <div>
+                      <% if game.home_winner %>
+                          <p> Winner: <%= game.game_home.team.name %>
+                      <% else %>
+                          <p> Winner: <%= game.game_away.team.name %>
+                      <% end %>
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
+    <!-- div .jumbotron -->
+    </div>
+<!-- div .col-md-8 col-lg-8 col-sm-8 col-md-offset-2 col-sm-offset-2 col-lg-offset-2 -->
+</div>
