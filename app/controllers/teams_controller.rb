@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class TeamsController < ApplicationController
 
   def new
 
@@ -11,13 +11,14 @@ class UsersController < ApplicationController
   end
 
   def update
+
   end
 
   def destroy
   end
 
   private
-  def user_params
+  def team_params
   end
-  
+
 end
