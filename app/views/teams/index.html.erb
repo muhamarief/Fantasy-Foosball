@@ -3,7 +3,7 @@
 <div class='col-md-8 col-lg-8 col-sm-8 col-md-offset-2 col-sm-offset-2 col-lg-offset-2'>
     <div class='row'>
         <div class='col-md-8 col-sm-8 col-lg-8 col-xs-10'>
-            <h2 class='headers-text'> TEAMS <small> All List </small> </h2>
+            <h2 class='headers-text'> TEAM RANK <small> Based on winning persentage </small> </h2>
         <!-- div .col-md-8 col-sm-8 col-lg-8 col-xs-10 -->
         </div>
         <div class='btn-admin col-md-4 col-sm-4 col-lg-4 col-xs-2'>
@@ -48,8 +48,8 @@
             <p> No Team Yet</p>
         <% else %>
             <% @teams.each do |team| %>
-                <div class='admin-entries'>
-                    <h3> <%= team.name %> </h3>
+                <div class='admin-indexes'>
+                    <h3> <%= team.name %> <small> Win:<%=team.winning_count.to_s + "/" + team.match_played.to_s %> </small></h3>
                     <% if team.users.length > 0 %>
                         <% team.users.each do |player| %>
 

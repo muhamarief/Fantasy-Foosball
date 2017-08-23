@@ -74,11 +74,12 @@
 
                     <div align='center'>
                         <% if match.winner && match.loser %>
-                            <p> Winner: <%= Team.find(match.winner.id)%> </p>
-                            <p> Loser: <%= Team.find(match.loser.id)%> </p>
+                            <p> Winner: <%= Team.find(match.winner).name%> </p>
+                            <p> Loser: <%= Team.find(match.loser).name%> </p>
+                            <%= link_to "Details", match_path(match) %>
+
                         <% else%>
                             <p> UpComing Match </p>
-
                             <%= link_to "Details", match_path(match) %>
                         <% end %>
                     </div>

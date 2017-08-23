@@ -8,7 +8,6 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     if @game.update(game_params) && @game.status
       @game.set_game_result
-      @game.match.get_match_result
       redirect_to matches_path
     else
       redirect_to matches_path
