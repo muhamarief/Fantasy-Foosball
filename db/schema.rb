@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170823013702) do
+ActiveRecord::Schema.define(version: 20170823044620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,13 +40,14 @@ ActiveRecord::Schema.define(version: 20170823013702) do
   create_table "games", force: :cascade do |t|
     t.integer  "away_score"
     t.integer  "home_score"
-    t.boolean  "away_winner?"
-    t.boolean  "home_winner?"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "game_away_id"
     t.integer  "game_home_id"
     t.integer  "match_id"
+    t.boolean  "status"
+    t.boolean  "away_winner",  default: false
+    t.boolean  "home_winner",  default: false
     t.index ["game_away_id"], name: "index_games_on_game_away_id", using: :btree
     t.index ["game_home_id"], name: "index_games_on_game_home_id", using: :btree
     t.index ["match_id"], name: "index_games_on_match_id", using: :btree
@@ -55,8 +56,10 @@ ActiveRecord::Schema.define(version: 20170823013702) do
   create_table "matches", force: :cascade do |t|
     t.integer  "winner"
     t.integer  "loser"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "away_team_id", null: false
+    t.integer  "home_team_id", null: false
   end
 
   create_table "teams", force: :cascade do |t|

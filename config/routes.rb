@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :teams, except: [:new, :index, :edit]
   resources :users, except: [:new, :index, :edit]
+  resources :matches, except: [:new, :index, :edit]
+  resources :games, except: [:new, :index, :edit]
 
 
 end
