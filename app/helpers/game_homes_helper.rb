@@ -1,0 +1,2 @@
+module GameHomesHelper
+end
