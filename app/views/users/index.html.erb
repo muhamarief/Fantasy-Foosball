@@ -58,7 +58,7 @@
             <p> No Players Yet </p>
         <% else %>
             <% @players.each do |player| %>
-                <div class='container'>
+                <div class='admin-indexes'>
                     <h4> <%= player.first_name + ", " + player.last_name %> </h4>
                     <p> Team : <%= player.team.name %>
                 </div>

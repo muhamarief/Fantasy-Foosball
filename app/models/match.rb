@@ -8,20 +8,44 @@ class Match < ApplicationRecord
       game_done +=1 unless !game.status
     end
 
-    if game_done == 3
+    if game_done > 1
       away = 0
       home = 0
 
+      team_away = Team.find(game.game_away.team_id)
+      team_away.match_played += 1
+
+      team_home = Team.find(game.game_home.team_id)
+      team_home.match_played += 1
+
+      team_away.save!
+      team_home.save!
+
       self.games.each do |game|
-        game.home_winner ? home += 1 : away += 1
+        if game.home_winner
+          home += 1
+        elsif game.away_winner
+          away += 1
+        end
       end
 
       if away == 2
         self.winner = away_team_id
-      elsif home == 2
-        self.winner = home_team_id
-      end
+        self.loser = home_team_id
+        self.save
 
+        winning_team = Team.find(winner)
+        winning_team.winning_count += 1
+        winning_team.save
+      elsif home == 2
+        self.winner = away_team_id
+        self.loser = home_team_id
+        self.save
+
+        winning_team = Team.find(winner)
+        winning_team.winning_count += 1
+        winning_team.save
+      end
     end
   end
 

@@ -13,15 +13,19 @@ class MatchesController < ApplicationController
   def create
     @match = Match.new(match_params)
     if @match.save
-      away_team = GameAway.new(team_id: @match.away_team_id)
-      home_team = GameHome.new(team_id: @match.home_team_id)
-      away_team.save!
-      home_team.save!
+      game_away = GameAway.new(team_id: @match.away_team_id)
+      game_home = GameHome.new(team_id: @match.home_team_id)
+
+      game_away.save!
+      game_home.save!
 
       3.times do
-        game = Game.new(away_score: 0, home_score: 0, away_winner: false, home_winner: false, game_away_id: away_team.id, game_home_id: away_team.id, status: false, match_id: @match.id)
+        game = Game.new(away_score: 0, home_score: 0, away_winner: false, home_winner: false, game_away_id: game_away.id, game_home_id: game_home.id, status: false, match_id: @match.id)
         game.save!
       end
+
+      game_away.team.match_played += 1
+
 
       redirect_to matches_path
     else
