@@ -1,0 +1,31 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <ul class="nav navbar-nav">
+            <li class='admin-links'>
+                <a href="#">Home</a>
+            </li>
+
+            <li class='admin-links'>
+                <%= link_to 'Teams', teams_path %>
+            </li>
+
+            <li class='admin-links'>
+                <%= link_to 'Players', players_path %>
+            </li>
+
+            <li class='admin-links'>
+              <%= link_to 'Matches', matches_path %>
+            </li>
+        <!-- ul .nav navbar-nav -->
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <%= link_to auth_admin_path(current_authenticatee), method: :delete do %>
+                    <span class="glyphicon glyphicon-log-in"></span> Log Out
+                <% end %>
+            </li>
+        </ul>
+    <!-- div .container-fluid -->
+    </div>
+</nav>
