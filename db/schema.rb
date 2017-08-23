@@ -10,10 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170823002130) do
+ActiveRecord::Schema.define(version: 20170823013702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
+    t.string   "username",        null: false
+    t.string   "email",           null: false
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "game_aways", force: :cascade do |t|
+    t.integer  "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_game_aways_on_team_id", using: :btree
+  end
+
+  create_table "game_homes", force: :cascade do |t|
+    t.integer  "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_game_homes_on_team_id", using: :btree
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.integer  "away_score"
+    t.integer  "home_score"
+    t.boolean  "away_winner?"
+    t.boolean  "home_winner?"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "game_away_id"
+    t.integer  "game_home_id"
+    t.integer  "match_id"
+    t.index ["game_away_id"], name: "index_games_on_game_away_id", using: :btree
+    t.index ["game_home_id"], name: "index_games_on_game_home_id", using: :btree
+    t.index ["match_id"], name: "index_games_on_match_id", using: :btree
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.integer  "winner"
+    t.integer  "loser"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "teams", force: :cascade do |t|
     t.string   "name"
